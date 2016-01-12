@@ -31,6 +31,7 @@ public:
 	{
 		while (IsOperatorControl() && IsEnabled())
 		{
+
 			myRobot.ArcadeDrive(stick); // drive with arcade style (use right stick)
 			Wait(0.005);				// wait for a motor update time
 		}
