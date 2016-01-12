@@ -1,0 +1,39 @@
+#include "WPILib.h"
+#include <Joystick.h>
+
+//Code for team 2172
+class Robot: public SampleRobot
+{
+	RobotDrive myRobot; // setup robot
+	Joystick stick; // setup joystick
+	USBCamera camera = new USBCamera("lifecam"); //setup camera named "lifecam"
+
+
+public:
+	Robot() :
+			myRobot(0, 1),	// initialize robot to drive on ports 0 and 1
+			stick(0)
+	{
+		myRobot.SetExpiration(0.1);
+		camera.SetWhiteBalanceAuto(); //set the camera's white balance to auto
+		camera.SetExposureAuto(); //set the camera's exposure to auto
+		camera.UpdateSettings(); //make sure the camera's settings are up to date
+	}
+
+	/**
+	 * Runs the motors with arcade steering.
+	 */
+	void OperatorControl()
+	{
+		while (IsOperatorControl() && IsEnabled())
+		{
+
+			myRobot.ArcadeDrive(stick); // drive with arcade style (use right stick)
+			camera.GetImage(Image); 	//get the most recent image from the camera
+			Wait(0.005);				// wait for a motor update time
+		}
+	}
+
+};
+
+START_ROBOT_CLASS(Robot)
